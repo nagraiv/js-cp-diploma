@@ -1,26 +1,21 @@
 /**
- * Основная функция для совершения запросов
- * на сервер.
+ * Класс инкапсулирует логику запросов на сервер.
  * */
-const createRequest = (options = {}) => {
-
-};
-
-class ApiRequest {
+export default class ApiRequest {
     static ULR = 'https://jscp-diplom.netoserver.ru/';
     static options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     };
 
-    static getSchedule() {
+    static getSchedule( callback = f => f ) {
         const init = Object.assign( { body: 'event=update' }, this.options );
-        console.log(init);
+        // console.log(init);
         fetch( this.ULR, init )
             .then(response => response.json())
-            .then(result => console.log(result));
+            .then(result => callback(result))
+            .catch(error => console.warn(error));
     }
 
 }
 
-ApiRequest.getSchedule();
