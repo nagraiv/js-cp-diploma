@@ -62,6 +62,7 @@ body {
     border-radius: 2px;
     text-decoration: none;
     color: $black;
+    transition: .2s all ease-in-out;
 
     &:hover:not(.page-nav__day_chosen) {
       background: rgba(245, 245, 245, 0.9);
@@ -89,6 +90,7 @@ body {
     background-color: $white;
     font-weight: 700;
     transform: scale(1.1);
+    transition: 0.2s all ease-in-out;
   }
 
   .page-nav__day_weekend {

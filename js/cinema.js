@@ -12,6 +12,19 @@ function getWeekday( date=new Date(), locale=getClientLocale() ) {
     return date.toLocaleString( locale, { weekday: 'short' } );
 }
 
+function pluralizeMinutes( quantity ) {
+    const rusPluralize = new Intl.PluralRules('ru-RU');
+    const pluralize = (quantity, ...nounCase) => {
+        const result = rusPluralize.select(quantity);
+        switch (result) {
+            case 'one': return nounCase[0];
+            case 'few': return nounCase[1];
+            case 'many': return nounCase[2];
+        }
+    }
+    return pluralize(quantity, 'минута', 'минуты', 'минут');
+}
+
 class Cinema {
     constructor() {
         this.calendar = document.querySelector('.page-nav');
@@ -73,14 +86,14 @@ class Cinema {
                 film_origin: origin } = info;
         return `<div class="movie__info">
             <div class="movie__poster">
-                <img class="movie__poster-image" alt="постер фильма" src="${poster}">
+                <img class="movie__poster-image" alt="постер фильма" src="${ poster }">
             </div>
             <div class="movie__description">
-                <h2 class="movie__title">${name}</h2>
-                <p class="movie__synopsis">${description}</p>
+                <h2 class="movie__title">${ name }</h2>
+                <p class="movie__synopsis">${ description }</p>
                 <p class="movie__data">
-                    <span class="movie__data-duration">${duration} минут</span>
-                    <span class="movie__data-origin">${origin}</span>
+                    <span class="movie__data-duration">${ duration } ${ pluralizeMinutes( duration ) }</span>
+                    <span class="movie__data-origin">${ origin }</span>
                 </p>
             </div>
         </div>
