@@ -322,6 +322,11 @@ body {
   &::before {
     content: '';
   }
+
+  & .conf-step__chair:hover:not(.conf-step__chair_taken):not(.conf-step__chair_disabled) {
+    opacity: 0.9;
+  }
+
 }
 
 .conf-step__row + .conf-step__row {
@@ -346,7 +351,7 @@ body {
   opacity: 0;
 }
 
-.conf-step__chair_standard {
+.conf-step__chair_standart {
   background-color: #FFFFFF;
 }
 

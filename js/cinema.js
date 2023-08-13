@@ -47,6 +47,7 @@ class Cinema {
         this.fillCalendar(this.date);
 
         this.movieContainer = document.querySelector('main');
+        this.movieContainer.addEventListener('click', this.chooseSeance.bind(this));
         this.renderSchedule(this.date);
     }
 
@@ -158,10 +159,28 @@ class Cinema {
         const timestamp = parseInt(seance.seance_start) * 60 + parseInt(this.movieContainer.dataset.date);
         return `<li class="movie-seances__time-block data-seance_id="${ seance.seance_id }">
             <a class="movie-seances__time" 
-        href="html/hall.html?movieId=${ movieId }&hallId=${ hallId }&seanceId=${ seance.seance_id }&timestamp=${ timestamp }">
-        ${ seance.seance_time }</a>
+        href="html/hall.html?movieId=${ movieId }&hallId=${ hallId }&seanceId=${ seance.seance_id }&timestamp=${ timestamp }"
+        >${ seance.seance_time }</a>
         </li>
         `;
+    }
+
+    /**
+     * Срабатывает при нажатии (выборе) сеанса
+     * сохраняет данные сеанса: название фильма,
+     * зал и время начала сеанса в Session Storage
+     * */
+    chooseSeance( event ) {
+        if (event.target.classList.contains('movie-seances__time')) {
+            const info = {
+                movieName: event.target.closest('.movie')
+                    .querySelector('.movie__title').textContent,
+                seanceTime: event.target.textContent,
+                hallName: event.target.closest('.movie-seances__hall')
+                    .querySelector('.movie-seances__hall-title').textContent,
+            };
+            sessionStorage.setItem('info', JSON.stringify( info ));
+        }
     }
 
     /**
