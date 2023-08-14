@@ -36,7 +36,7 @@ export default class ApiRequest {
             .catch(error => console.warn(error));
     }
 
-    static bookTickets( data={}, callback = f => f ) {
+    static getTickets( data={}, callback = f => f ) {
         const init = this.bodyMaker('event=sale_add', data);
         fetch( this.ULR, init )
             .then(response => response.json())

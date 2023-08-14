@@ -1,48 +1,5 @@
 import ApiRequest from './createRequest.js';
 
-// console.log(location.href);
-// const url = new URL(location.href);
-// console.log(url.searchParams);
-// const movieId = url.searchParams.get('movieId');
-// const hallId = url.searchParams.get('hallId');
-// const seanceId = url.searchParams.get('seanceId');
-// let timestamp = url.searchParams.get('timestamp');
-// console.log(movieId, hallId, seanceId, timestamp);
-// timestamp -= 60*60*7;
-// console.log(timestamp);
-//
-// // console.log(new Date('2023-08-11T00:00+07:00'));
-// // console.log(new Date(2023,8,11));
-// const now = new Date();
-// const stamp = now.setHours(0,0,0,0);
-// console.log(now);
-// console.log(new Date(stamp));
-//
-// // timestamp += stamp;
-// // timestamp /= 1000;
-// ApiRequest.getSeats( { timestamp, hallId, seanceId }, ( response ) => {
-//     console.log(response);
-// });
-//
-//
-// let today = new Date();
-// today.setHours(0, 0, 0);
-// for (let i = 0; i < 6; i++) {
-//     let day = new Date(today.getTime() + (i * 24 * 60 * 60 * 1000));
-//     let timestamp = Math.trunc(day / 1000);
-//     console.log(timestamp);
-//     // let timeStampSeanceDay = Number(movieSeance.dataset.seanceStart) * 60;
-//     // let timeStampSeance = timeStampDay + timeStampSeanceDay;
-//     // let timeStampNow = Math.trunc(+new Date() / 1000);
-// }
-//
-// let body = `event=get_hallConfig&timestamp=${timestamp}&hallId=${hallId}&seanceId=${seanceId}`;
-// console.log(body);
-//
-// ApiRequest.getRequest( body, ( response ) => {
-//     console.log(response);
-// });
-
 /**
  * Класс Hall инкапсулирует логику страницы hall.html
  * отрисовывает посадочные места в зале

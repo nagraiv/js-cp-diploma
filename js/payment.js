@@ -2,21 +2,20 @@ import ApiRequest from './createRequest.js';
 
 /**
  * Класс Payment инкапсулирует логику страницы payment.html
- * отрисовывает посадочные места в зале
- * с учётом ранее забронированных
+ * сообщает серверу о бронировании
  * */
 class Payment {
     constructor() {
         this.urlSearsh = new URL(location.href).searchParams;
-        this.bookBtn = document.querySelector('.accepting-button');
-        this.bookBtn.onclick = () => location.href=`ticket.html?${ this.urlSearsh.toString() }`;
+        this.payBtn = document.querySelector('.accepting-button');
+        this.payBtn.addEventListener('click', this.reserveTickets.bind(this));
         this.setBuyingInfo();
     }
 
     /**
-     * Извлекает из Session Storage информацию
-     * о сеансе и выбранных местах, заполняет
-     * соответствующий раздел страницы
+     * Извлекает из Session Storage данные заказа:
+     * выводит на страницу информацию о сеансе,
+     * выбранных местах и стоимости билетов
      * */
     setBuyingInfo() {
         const container = document.querySelector('.ticket__info-wrapper');
@@ -31,6 +30,17 @@ class Payment {
 
         container.querySelector('.ticket__cost')
             .textContent = sessionStorage.getItem( 'totalPrice' );
+    }
+
+    reserveTickets() {
+        ApiRequest.getTickets({
+            timestamp: this.urlSearsh.get('timestamp'),
+            hallId: this.urlSearsh.get('hallId'),
+            seanceId: this.urlSearsh.get('seanceId'),
+            hallConfiguration: sessionStorage.getItem('hallConfiguration'),
+        }, (( response ) => {
+            console.log(response);
+        }));
     }
 }
 
