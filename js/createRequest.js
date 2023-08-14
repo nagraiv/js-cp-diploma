@@ -9,8 +9,8 @@ export default class ApiRequest {
     };
 
     static getSchedule( callback = f => f ) {
-        const init = Object.assign( { body: 'event=update' }, this.options );
-        // console.log(init);
+        const init = this.bodyMaker('event=update');
+            // Object.assign( { body: 'event=update' }, this.options );
         fetch( this.ULR, init )
             .then(response => response.json())
             .then(result => callback(result))
@@ -18,8 +18,38 @@ export default class ApiRequest {
     }
 
     static getSeats( data={}, callback = f => f ) {
-        console.log(data);
-        let body = 'event=get_hallConfig';
+        // console.log(data);
+        // let body = 'event=get_hallConfig';
+        // try {
+        //     for (let key in data) {
+        //         body += `&${ key }=${ data[key] }`;
+        //     }
+        // } catch (e) {
+        //     console.warn('Недопустимый формат данных! ', e);
+        // }
+        // console.log(body);
+        const init = this.bodyMaker('event=get_hallConfig', data);
+            // Object.assign( { body }, this.options );
+        fetch( this.ULR, init )
+            .then(response => response.json())
+            .then(result => callback(result))
+            .catch(error => console.warn(error));
+    }
+
+    static bookTickets( data={}, callback = f => f ) {
+        const init = this.bodyMaker('event=sale_add', data);
+        fetch( this.ULR, init )
+            .then(response => response.json())
+            .then(result => callback(result))
+            .catch(error => {
+                console.warn(error);
+                alert('Произошёл сбой! Повторите попытку бронирования.');
+            });
+    }
+
+    static bodyMaker( event='', data={} ) {
+        console.log(event, data);
+        let body = event;
         try {
             for (let key in data) {
                 body += `&${ key }=${ data[key] }`;
@@ -28,23 +58,7 @@ export default class ApiRequest {
             console.warn('Недопустимый формат данных! ', e);
         }
         console.log(body);
-        const init = Object.assign( { body }, this.options );
-        fetch( this.ULR, init )
-            .then(response => response.json())
-            .then(result => callback(result))
-            .catch(error => console.warn(error));
+        return Object.assign( { body }, this.options );
     }
-
-    static getRequest(body, callback) {
-        let xhr = new XMLHttpRequest();
-
-        xhr.open("POST", "https://jscp-diplom.netoserver.ru/", true);
-        xhr.responseType = "json";
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(body);
-        xhr.onload = () => {
-            callback(xhr.response);
-        };
-    };
 }
 

@@ -51,7 +51,6 @@ import ApiRequest from './createRequest.js';
 class Hall {
     constructor() {
         this.urlSearsh = new URL(location.href).searchParams;
-
         this.setBuyingInfo();
 
         this.hallPlan = document.querySelector('.conf-step__wrapper');
@@ -94,7 +93,6 @@ class Hall {
         const hallId = this.urlSearsh.get('hallId');
         const seanceId = this.urlSearsh.get('seanceId');
         const timestamp = this.urlSearsh.get('timestamp');
-        console.log(hallId, seanceId, timestamp);
         ApiRequest.getSeats( { timestamp, hallId, seanceId }, ( response ) => {
             console.log(response);
             this.hallPlan.innerHTML = response || currentHall['hall_config'];
@@ -123,6 +121,7 @@ class Hall {
      * сохраняет эти данные в Session Storage
      * */
     bookSeats() {
+        location.href=`payment.html?${ this.urlSearsh.toString() }`;
         sessionStorage.setItem('hallConfiguration', this.hallPlan.innerHTML);
 
         const standard = [...this.hallPlan.querySelectorAll('.conf-step__chair_selected.conf-step__chair_standart')];
@@ -143,7 +142,7 @@ class Hall {
                 }
             }
         }
-        sessionStorage.setItem('chosenSeats', selected.toString());
+        sessionStorage.setItem('chosenSeats', selected.join(', '));
     }
 }
 
