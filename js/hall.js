@@ -51,7 +51,7 @@ class Hall {
         const seanceId = this.urlSearsh.get('seanceId');
         const timestamp = this.urlSearsh.get('timestamp');
         ApiRequest.getSeats( { timestamp, hallId, seanceId }, ( response ) => {
-            console.log(response);
+            // console.log(response);
             this.hallPlan.innerHTML = response || currentHall['hall_config'];
         });
     }

@@ -32,7 +32,13 @@ class Payment {
             .textContent = sessionStorage.getItem( 'totalPrice' );
     }
 
+    /**
+     * Отслеживает нажатие на кнопку "Получить код бронирования"
+     * Использует ApiRequest.getTickets, чтобы
+     * сообщить серверу о новом бронировании
+     * */
     reserveTickets() {
+        location.href=`ticket.html?${ this.urlSearsh.toString() }`;
         ApiRequest.getTickets({
             timestamp: this.urlSearsh.get('timestamp'),
             hallId: this.urlSearsh.get('hallId'),
