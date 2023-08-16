@@ -17,6 +17,21 @@ class Hall {
         this.bookBtn = document.querySelector('.accepting-button');
         this.bookBtn.disabled = true;
         this.bookBtn.addEventListener('click', this.bookSeats.bind(this));
+
+        this.zoom = false;
+        document.querySelector('.buying').addEventListener('dblclick', this.doubleTap.bind(this));
+    }
+
+    doubleTap( event ) {
+        event.preventDefault();
+        if (!this.zoom) {
+            event.currentTarget.style.transform = `scale(2) translate(${window.innerWidth / 2}px, ${window.innerHeight / 2}px)`;
+            window.scrollTo(event.clientX * 2, event.clientY * 2);
+        } else {
+            event.currentTarget.style.transform = '';
+            window.scrollTo(event.clientX, event.clientY);
+        }
+        this.zoom = !this.zoom;
     }
 
     /**
