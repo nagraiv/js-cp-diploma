@@ -24,20 +24,13 @@ class Hall {
 
     doubleTap( event ) {
         event.preventDefault();
+        const { width, height } = event.currentTarget.getBoundingClientRect();
         if (!this.zoom) {
-            event.currentTarget.style.transform = `scale(2) translate(${window.innerWidth / 2}px, ${window.innerHeight / 2}px)`;
-            document.body.scrollTop = event.clientY * 2;
-            document.documentElement.scrollTop = event.clientY * 2;
-            document.body.scrollLeft = event.clientX * 2;
-            document.documentElement.scrollLeft = event.clientX * 2;
-            // setTimeout(window.scrollTo, 0, {left: event.clientX * 2, top: event.clientY * 2, behavior: 'smooth'});
+            event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
+            setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
         } else {
             event.currentTarget.style.transform = '';
-            document.body.scrollTop = event.clientY;
-            document.documentElement.scrollTop = event.clientY;
-            document.body.scrollLeft = event.clientX;
-            document.documentElement.scrollLeft = event.clientX;
-            // setTimeout(window.scrollTo, 0, {left: event.clientX, top: event.clientY, behavior: 'smooth'});
+            setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
         }
         this.zoom = !this.zoom;
     }
