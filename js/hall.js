@@ -26,10 +26,10 @@ class Hall {
         event.preventDefault();
         if (!this.zoom) {
             event.currentTarget.style.transform = `scale(2) translate(${window.innerWidth / 2}px, ${window.innerHeight / 2}px)`;
-            window.scrollTo(event.clientX * 2, event.clientY * 2);
+            setTimeout(() => { window.scrollTo(event.clientX * 2, event.clientY * 2) });
         } else {
             event.currentTarget.style.transform = '';
-            window.scrollTo(event.clientX, event.clientY);
+            setTimeout(() => { window.scrollTo(event.clientX, event.clientY) });
         }
         this.zoom = !this.zoom;
     }
