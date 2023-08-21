@@ -329,6 +329,10 @@ body {
 
 }
 
+.conf-step__row {
+  display: flex;
+}
+
 .conf-step__row + .conf-step__row {
   margin-top: 4px;
 }

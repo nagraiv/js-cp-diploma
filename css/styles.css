@@ -275,6 +275,10 @@ body {
   opacity: 0.9;
 }
 
+.conf-step__row {
+  display: flex;
+}
+
 .conf-step__row + .conf-step__row {
   margin-top: 4px;
 }
