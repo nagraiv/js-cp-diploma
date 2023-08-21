@@ -114,11 +114,14 @@ class Hall {
         event.preventDefault();
         const { width, height } = event.currentTarget.getBoundingClientRect();
         if (!this.zoom) {
-            event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
-            setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
+            console.log(event.target);
+            event.target.style.zoom = '2';
+            // event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
+            // setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
         } else {
-            event.currentTarget.style.transform = '';
-            setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
+            event.target.style.zoom = '1';
+            // event.currentTarget.style.transform = '';
+            // setTimeout(window.scrollTo, 0, event.clientX, event.clientY);
         }
         this.zoom = !this.zoom;
     }
