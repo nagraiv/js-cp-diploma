@@ -17,9 +17,9 @@ class Hall {
         this.bookBtn = document.querySelector('.accepting-button');
         this.bookBtn.disabled = true;
         this.bookBtn.addEventListener('click', this.bookSeats.bind(this));
-
+        // отслеживает, применено ли увеличение к главному содержимому страницы
         this.zoom = false;
-        document.querySelector('.buying').addEventListener('dblclick', this.doubleTap.bind(this));
+        document.querySelector('.buying').addEventListener('touchend', this.doubleTap.bind(this));
     }
 
     /**
@@ -106,22 +106,53 @@ class Hall {
     }
 
     /**
-     * Отслеживает двойной клик/касание
-     * по содержимому страницы
-     * увеличивает масштаб в два раза
+     * Обёртка позволяет хранить
+     * значения в замыкании
      * */
-    doubleTap( event ) {
+    doubleTapWrapper = () => {
+        let timeoutId = null;
+        let clientX = null;
+        let clientY = null;
+        return ( event ) => {
+            if (event.touches.length === 1 && timeoutId && Math.abs(clientX - event.touches[0].pageX) < 20 && Math.abs(clientY - event.touches[0].pageY) < 20) {
+                // console.log('double tap!!!');
+                this.onDoubleTap( event );
+            } else {
+                // console.log('first tap');
+                timeoutId = setTimeout(() => {
+                    timeoutId = null;
+                }, 300);
+                clientX = event.touches[0].pageX;
+                clientY = event.touches[0].pageY;
+            }
+        }
+    }
+
+    /**
+     * Отслеживает двойное касание
+     * по содержимому страницы
+     * */
+    doubleTap = this.doubleTapWrapper();
+
+    /**
+     * Увеличивает масштаб кинозала
+     * */
+    onDoubleTap( event ) {
         event.preventDefault();
         const { width, height } = event.currentTarget.getBoundingClientRect();
         if (!this.zoom) {
-            // console.log(event.target);
-            event.currentTarget.style.zoom = '2';
-            // event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
-            setTimeout(window.scrollTo, 300, event.clientX, event.clientY);
+            // console.log(event.currentTarget);
+            // event.currentTarget.style.zoom = '2';
+            // this.hallPlan.style.zoom = '2';
+            // document.body.style.zoom = '2';
+            event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
+            setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
         } else {
-            event.currentTarget.style.zoom = '1';
-            // event.currentTarget.style.transform = '';
-            setTimeout(window.scrollTo, 300, event.clientX, event.clientY);
+            // event.currentTarget.style.zoom = '1';
+            // this.hallPlan.style.zoom = '1';
+            // document.body.style.zoom = '1';
+            event.currentTarget.style.transform = '';
+            setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
         }
         this.zoom = !this.zoom;
     }
