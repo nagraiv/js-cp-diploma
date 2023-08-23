@@ -157,8 +157,8 @@ class Cinema {
      * */
     getSeanceHTML( seance, hallId, movieId ) {
         const timestamp = parseInt(seance.seance_start) * 60 + parseInt(this.movieContainer.dataset.date);
-        return `<li class="movie-seances__time-block data-seance_id="${ seance.seance_id }">
-            <a class="movie-seances__time" 
+        return `<li class="movie-seances__time-block" data-seance_id="${ seance.seance_id }">
+            <a class="movie-seances__time ${ timestamp < Date.now()/1000 ? 'accepting-button-disabled' : ''}" 
         href="html/hall.html?movieId=${ movieId }&hallId=${ hallId }&seanceId=${ seance.seance_id }&timestamp=${ timestamp }"
         >${ seance.seance_time }</a>
         </li>

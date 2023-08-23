@@ -30,7 +30,7 @@ class Ticket {
         const seats = sessionStorage.getItem( 'chosenSeats' );
         container.querySelector('.ticket__chairs').textContent = seats;
 
-        const qrText = `Фильм: ${ movieName }\nРяд/Место: ${ seats }, ${ hallName }\nНачало сеанса: ${ seanceTime }`;
+        const qrText = `Фильм: ${ movieName }\nРяд/Место: ${ seats }, ${ hallName }\nНачало сеанса: ${ seanceTime }\nБилет действителен строго на свой сеанс.`;
 
         QrCreator.render({
             text: qrText,

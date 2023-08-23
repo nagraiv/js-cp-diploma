@@ -111,10 +111,10 @@ class Hall {
      * */
     doubleTapWrapper = () => {
         let timeoutId = null;
-        let clientX = null;
-        let clientY = null;
+        let x = null;
+        let y = null;
         return ( event ) => {
-            if (timeoutId && Math.abs(clientX - event.touches[0].pageX) < 20 && Math.abs(clientY - event.touches[0].pageY) < 20) {
+            if (timeoutId && Math.abs(x - event.touches[0].pageX) < 20 && Math.abs(y - event.touches[0].pageY) < 20) {
                 console.log('double tap!!!', event);
                 this.onDoubleTap( event );
             } else {
@@ -122,8 +122,8 @@ class Hall {
                 timeoutId = setTimeout(() => {
                     timeoutId = null;
                 }, 300);
-                clientX = event.touches[0].pageX;
-                clientY = event.touches[0].pageY;
+                x = event.touches[0].pageX;
+                y = event.touches[0].pageY;
             }
         }
     }
@@ -141,19 +141,20 @@ class Hall {
         event.preventDefault();
         const { width, height } = event.currentTarget.getBoundingClientRect();
         if (!this.zoom) {
-            // console.log(event.currentTarget);
+            console.log(event.touches[0].pageX, event.touches[0].pageY);
             // event.currentTarget.style.zoom = '2';
             // this.hallPlan.style.zoom = '2';
             // document.body.style.zoom = '2';
             event.currentTarget.style.transform = `scale(2) translate(${width / 4}px, ${height / 4}px)`;
-            setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
+            // setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
         } else {
             // event.currentTarget.style.zoom = '1';
             // this.hallPlan.style.zoom = '1';
             // document.body.style.zoom = '1';
             event.currentTarget.style.transform = '';
-            setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
+            // setTimeout(window.scrollTo, 50, event.touches[0].pageX, event.touches[0].pageY);
         }
+        event.target.scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});
         this.zoom = !this.zoom;
     }
 }
