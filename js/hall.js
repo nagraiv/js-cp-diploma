@@ -19,7 +19,7 @@ class Hall {
         this.bookBtn.addEventListener('click', this.bookSeats.bind(this));
         // отслеживает, применено ли увеличение к главному содержимому страницы
         this.zoom = false;
-        document.querySelector('.buying').addEventListener('touchend', this.doubleTap.bind(this));
+        document.querySelector('.buying').addEventListener('touchstart', this.doubleTap.bind(this));
     }
 
     /**
@@ -114,11 +114,11 @@ class Hall {
         let clientX = null;
         let clientY = null;
         return ( event ) => {
-            if (event.touches.length === 1 && timeoutId && Math.abs(clientX - event.touches[0].pageX) < 20 && Math.abs(clientY - event.touches[0].pageY) < 20) {
-                // console.log('double tap!!!');
+            if (timeoutId && Math.abs(clientX - event.touches[0].pageX) < 20 && Math.abs(clientY - event.touches[0].pageY) < 20) {
+                console.log('double tap!!!', event);
                 this.onDoubleTap( event );
             } else {
-                // console.log('first tap');
+                console.log('first tap', event);
                 timeoutId = setTimeout(() => {
                     timeoutId = null;
                 }, 300);
